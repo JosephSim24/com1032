@@ -1,0 +1,8 @@
+image: gitlab-registry.surrey.ac.uk/csee/com1032/images:2022-23
+
+build:
+  script:
+    - mvn compile
+  only:
+    - main
+
