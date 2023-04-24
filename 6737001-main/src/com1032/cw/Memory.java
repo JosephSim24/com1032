@@ -10,7 +10,7 @@ public class Memory {
 	 */
 	private int OSsize;
 	private int total_size;
-
+	
 	
 	/**
 	 * Main Memory Constructor 
