@@ -13,7 +13,7 @@ public class Process {
 		pid ++;
 		ArrayList<Segment> segmentList = new ArrayList<Segment>();
 		
-		//Parser Examples
+		// Parser Examples
 		Parser P = new Parser();
 		ArrayList<String>[] list = P.parseInputString(processString);
 		
