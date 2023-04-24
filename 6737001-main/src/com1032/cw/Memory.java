@@ -44,7 +44,7 @@ public class Memory {
 		
 	}
 	/**
-	 * remove a segment of the process from the memory
+	 * Remove a segment of the process from the memory
 	 * @param p the process with the segment 
 	 * @param seg the segment to be removed from the main memory
 	 */
