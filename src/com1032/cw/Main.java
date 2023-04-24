@@ -7,7 +7,7 @@ public class Main {
 	
 	public static void main(String[] args) {	
 		
-		// you should indicate the start and the end for each task
+		// You should indicate the start and the end for each task
 		System.out.println("Start Component B.1");
 
 		//Create Memory with 1024 bytes total memory, and 124 bytes of OS memory
