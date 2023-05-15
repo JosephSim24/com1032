@@ -8,7 +8,7 @@ public class Main {
 	public static void main(String[] args) {	
 		
 		// You should indicate the start and the end for each task
-		System.out.println("Start Component B.1");
+		System.out.println("Start Component B.1\n");
 
 		// Create Memory with 1024 bytes total memory, and 124 bytes of OS memory
 		// Your code might look differently
@@ -25,7 +25,7 @@ public class Main {
         
         // Now, attempt to allocate the first segment from P1 into memory
         // (Segment numbers start at 1.)
-        System.out.println("Add Segment [P1, S1] to Main Memory from Process " + p1.toString());
+        System.out.println("\nAdd Segment [P1, S1] to Main Memory from Process " + p1.toString());
         System.out.println("+ State Before");
         M.memoryState(); // show how the memory looks after the operations
         p1.segmentTable(); // show how the segment table looks after the operations
@@ -46,22 +46,70 @@ public class Main {
 
         M.memoryState(); // show how the memory looks after the operations
         // you can add P2 and P3 in here 
-
+        
+        
+        // Testing the same for P2
+        System.out.println("\nAdd Segment [P2, S1] to Main Memory from " + p2.toString());
+        System.out.println("+ State Before");
+        M.memoryState();
+        System.out.println();
+        p2.segmentTable();
+        
+        M.allocate(p2, p2.getSegment(1));
+        
+        System.out.println("- State After");
+        M.memoryState();
+        p2.segmentTable();
+        
+        System.out.println("Add all segments of P2 to Main Memory .");
+        M.allocate(p2);
+        p2.segmentTable();
+        
+        M.memoryState();
+        System.out.println();
+        
+        
+        
+        // Testing the same for P3
+        System.out.println("Add Segment [P3, S1] to Main Memory from " + p3.toString());
+        System.out.println("+ State Before");
+        M.memoryState();
+        System.out.println();
+        p3.segmentTable();
+        
+        M.allocate(p3, p3.getSegment(1));
+        
+        System.out.println("- State After");
+        M.memoryState();
+        p3.segmentTable();
+        
+        // Expecting error: not enough free space in memory
+        System.out.println("Add all segments of P3 to Main Memory .");
+        M.allocate(p3);
+        p3.segmentTable();
+        
+        M.memoryState();
+        System.out.println();
+        
+        
+        
+        
         
 		System.out.println("Deallocate segment [P1 S1] from the main memory ");
 		M.deallocate(p1,p1.getSegment(1));
 		p1.segmentTable();
 		M.memoryState();
 
+		System.out.println();
 		System.out.println("Deallocate P1 from the main memory");
 		M.deallocate(p1);
 		p1.segmentTable();
 		M.memoryState();
 		
-		
+		System.out.println();
 		System.out.println("Resize Process " + p3.toString());
-		p2.resize("10, -30, 40, 10, -20");		
-		p2.segmentTable();
+		p3.resize("10, -30, 40, -10, -20");		
+		p3.segmentTable();
 		M.memoryState();
 		
 		
