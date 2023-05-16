@@ -1,6 +1,5 @@
 package com1032.cw;
 
-import java.util.Arrays;
 
 public class Main {
 
@@ -84,7 +83,7 @@ public class Main {
         p3.segmentTable();
         
         // Expecting error: not enough free space in memory
-        System.out.println("Add all segments of P3 to Main Memory .");
+        System.out.println("Add all segments of P3 to Main Memory ");
         M.allocate(p3);
         p3.segmentTable();
         
@@ -94,36 +93,95 @@ public class Main {
         
         
         
-        
+        // Attempt to deallocate one segment from the memory
 		System.out.println("Deallocate segment [P1 S1] from the main memory ");
 		M.deallocate(p1,p1.getSegment(1));
 		p1.segmentTable();
 		M.memoryState();
 
+		// Attempt to deallocate one process from the memory
 		System.out.println();
 		System.out.println("Deallocate P1 from the main memory");
 		M.deallocate(p1);
 		p1.segmentTable();
 		M.memoryState();
 		
-		System.out.println();
-		System.out.println("Resize Process " + p3.toString());
-		p3.resize("10, -30, 40, -10, -20");		
-		p3.segmentTable();
+		// Attempt to deallocate another segment from the memory
+		System.out.println("Deallocate segment [P2 S2] from the main memory\n");
+		M.deallocate(p2,p2.getSegment(2));
+		p2.segmentTable();
 		M.memoryState();
 		
 		
-        System.out.println("End Component B.1");
+		// Attempt to resize the segments of a process
+		System.out.println();
+		System.out.println("Resize Process " + p3.toString());
+		p3.resize("10, -30, 40, 10, -20");	
+		
+		// This method must be called to resize the processes after resizing the segments
+		M.resizeProcess(p3);
+		
+		
+		p3.segmentTable();
+		M.memoryState();
+		System.out.println();
+		
+		
+		// Attempting to resize the segments of process 2, where one
+		// will go to zero and therefore needs to be deleted
+		System.out.println("+ State Before");
+		p2.segmentTable();
+		
+		System.out.println();
+		System.out.println("Resize Process " + p2.toString());
+		p2.resize("15, 10, -20, 25");
+		
+		M.resizeProcess(p2);
+		
+		
+		System.out.println("- State After");
+		p2.segmentTable();
+		M.memoryState();
+		
+		
+        System.out.println("\nEnd Component B.1");
         
         
+        
+        
+        System.out.println();
         System.out.println("Start Component B.2.2");
      // create a new process for tasks B.2.2
         Process p5 = new Process("5, [20; rwx], [70; r--], [50; -w-]");
         
-        //TODO: more code to be added
-        // ..... 
+        // Show the segment table for the new process
+        p5.segmentTable();
+        
+        
+        // Looking up each segment
+        M.getSegment(p5, p5.getSegment(1));
+        M.getSegment(p5, p5.getSegment(2));
+        M.getSegment(p5, p5.getSegment(3));
+        
+        
         System.out.println("End Component B.2.2");
         
-        // TODO: continue to complete the rest of the code
+        
+        
+        System.out.println();
+        System.out.println("Start Component B.2.4");
+        System.out.println();
+        
+        // Shows the memory state before compacting
+        M.memoryState();
+        
+        System.out.println("\nRunning compaction...");
+        M.compactMemory();
+        
+        // Shows the memory state after compacting
+        M.memoryState();
+        
+        System.out.println("\nEnd Component B.2.4");
+        
 	}
 }

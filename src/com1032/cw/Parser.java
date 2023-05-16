@@ -62,11 +62,6 @@ public class Parser {
 			index++;
 		}
 		
-		//TODO: remove the print
-	/*	for (int i =0; i<size; i++){
-			System.out.println(comp[i].toString());
-		}*/
-		
 		//return all the parts separated by , and ; from process_string
 		return comp;
 	}
