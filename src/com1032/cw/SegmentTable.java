@@ -136,6 +136,22 @@ public class SegmentTable {
 		return allSegments;
 	}
 	
+	
+	/**
+	 * A method that returns the segments that are not in the memory
+	 * @return An array list of segments that are not in the memory
+	 */
+	public ArrayList<Segment> getSegmentsNotInMemory() {
+		ArrayList<Segment> allSegments = new ArrayList<>();
+		for (Segment seg : segments) {
+			if (seg.getInMemory() != true) {
+				allSegments.add(seg);
+			}
+		}
+		return allSegments;
+	}
+	
+	
 	/**
 	 * A method that returns the number of segments that are in the main memory
 	 * @return The number of segments, from a segment table, that are in the main memory
@@ -151,8 +167,8 @@ public class SegmentTable {
 	}
 	
 	
-	/*
-	 * display the details of all of the segments in the table
+	/**
+	 * A method to display the details of all of the segments in the table
 	 */
 	public String toString() {
 		String output = "Segment table:\nSid | base | limit | valid-invalid | permissions\n";

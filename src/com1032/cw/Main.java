@@ -11,7 +11,7 @@ public class Main {
 
 		// Create Memory with 1024 bytes total memory, and 124 bytes of OS memory
 		// Your code might look differently
-		Memory M = new Memory(1024, 124);
+		Memory M = new Memory(2048, 124);
 		// Show how the memory looks before we do anything
 		System.out.println("Initial Main memory state:");
 		M.memoryState();
@@ -148,7 +148,7 @@ public class Main {
         
         
         
-        
+        // Testing component B.2.2
         System.out.println();
         System.out.println("Start Component B.2.2");
      // create a new process for tasks B.2.2
@@ -169,6 +169,39 @@ public class Main {
         
         
         System.out.println();
+        System.out.println("Start Component B.2.3");
+        
+        // Create a new process for task B.2.3
+        Process p6 = new Process("6, 50, 85");
+        p6.segmentTable();
+        M.memoryState();
+        
+        // Add all segments in the process to the memory and shows
+        // TLB misses
+        M.allocate(p6);
+        
+        p6.segmentTable();
+        M.memoryState();
+        
+        // Deallocate all segments from p6 and shows TLB hits
+        M.deallocate(p6);
+        
+        p6.segmentTable();
+        M.memoryState();
+        
+        
+        // Deallocate a segment from a different process to the memory
+        // and in turn showing a TLB miss
+        M.deallocate(p3, p3.getSegment(4));
+        
+        p3.segmentTable();
+        M.memoryState();
+        
+        System.out.println("End Component B.2.3");        
+        
+        
+        // Testing component B.2.4
+        System.out.println();
         System.out.println("Start Component B.2.4");
         System.out.println();
         
@@ -183,5 +216,30 @@ public class Main {
         
         System.out.println("\nEnd Component B.2.4");
         
+        
+        System.out.println();
+        System.out.println("Start Component B.3");
+        
+        // Trying to create a new memory with the invalid sizes
+        // Memory fail = new Memory(400, 450);
+        
+        // Trying to create a process with invalid segments sizes
+        // Process p7 = new Process("7, -30, -75");
+        
+        // Trying to allocate a segment too large for the memory
+        Process p8 = new Process("8, 5000");
+        M.allocate(p8);
+        
+        // Trying to deallocate a segment which is not allocated
+        M.deallocate(p8);
+        
+        // Trying to resize a segment where the size becomes less than zero
+        Process p9 = new Process("9, 40, 60, 10");
+        p9.resize("10, 40, -20");
+        
+        // Trying to resize too many segments in a process
+        p9.resize("10, 40, 20, 50");
+        
+        System.out.println("End Component B.3");
 	}
 }

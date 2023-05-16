@@ -13,6 +13,7 @@ public class Process {
 	private int pid = 0; // The id of the process
 	private SegmentTable segmentTable; // Segment table of all segments in a process
 	private ArrayList<Segment> fragments; // Array list of all fragments in a process
+	private ArrayList<Segment> allSegments; // Array list of the segments that are resized
 	
 	/**
 	 * Process constructor
@@ -26,14 +27,16 @@ public class Process {
 		Parser P = new Parser();
 		ArrayList<String>[] list = P.parseInputString(processString);
 		
-		this.pid = Integer.parseInt(list[0].get(0));
+		this.pid = Integer.parseInt(list[0].get(0)); // Sets the process ID as the first
+		// integer in the list of strings which were inputed by the user
 		
 		for(int id = 1; id < list.length; id++) {
 			int segmentSize = Integer.valueOf(list[id].get(0));
 			Segment segment = new Segment(id, segmentSize);
-			if (String.valueOf(list[id]).contains(" ")) {
-				if (String.valueOf(list[id].get(1)).contains("r")) {
-					segment.setReadPerms('r');
+			if (String.valueOf(list[id]).contains(" ")) { // Checks that the list contains a space and if so, then
+				// permissions have been specified by the user
+				if (String.valueOf(list[id].get(1)).contains("r")) { // Sets the permissions depending on whether
+					segment.setReadPerms('r'); 						 // or not the corresponding character has been entered
 				}
 				if (String.valueOf(list[id].get(1)).contains("w")) {
 					segment.setWritePerms('w');
@@ -42,10 +45,10 @@ public class Process {
 					segment.setExecutePerms('x');
 				}
 			}
-			segmentList.add(segment);
+			segmentList.add(segment); // Adds the segment to the list of segments
 		}
 		
-		segmentTable = new SegmentTable(segmentList);
+		segmentTable = new SegmentTable(segmentList); // Creates a new segment table consisting of the segment list
 		fragments = new ArrayList<>();
 		
 	}
@@ -56,45 +59,57 @@ public class Process {
 	 */
 	public void resize(String segments) {
 		ArrayList<Integer> size = new ArrayList<>();
+		allSegments = new ArrayList<>();
 		Parser P = new Parser();
 		ArrayList<String>[] list = P.parseInputString(segments); // The string in the parameter
 		// is formatted to then be stored
 		
 		for (int resize = 0; resize < list.length; resize++) {
 			int segmentResize = Integer.valueOf(list[resize].get(0)); // Creates an array list of all the
-			size.add(segmentResize); // values in the parameter.
+			size.add(segmentResize); 								  // values in the parameter.
 		}
 		
-		ArrayList<Segment> segmentList = getAllSegments();
+		ArrayList<Segment> segmentList = getAllSegments(); // Gets all the segments in a process
 		
 		if (size.size() > segmentList.size()) { // An error occurs when the number of segment changes that are
-			System.out.println("Error: The number of segments entered are too " // Inputed are too many for the
-					+ "many, please enter less."); // number of segments
+			System.out.println("Error: The number of segments entered are too " // inputed are too many for the
+					+ "many, please enter less."); 								// number of segments
 		} else {
 			for (int i = 0; i < size.size(); i++) { // Loops through for the number of numbers which are inputed
 				int temp = segmentList.get(i).getSize() + size.get(i);
 				if (temp == 0) { // If the size of the segment becomes zero, then the segment is added to an array
-					fragments.add(segmentList.get(i)); // list of fragments and deleted from the list of segments
+					fragments.add(segmentList.get(i)); // list of fragments
 				}
 				else if (size.get(i) < 0) { // If the size of the segments is reduced but is more than zero, then
 					segmentList.get(i).setSize(size.get(i) * -1); // a fragment is created for that change of size
 					fragments.add(segmentList.get(i));
 				}
-				else if (temp < 0) { // If the size of the segment is less than zero then an error occurs
+				if (temp < 0) { // If the size of the segment is less than zero then an error occurs
 					System.out.println("Error: The size of a segment is negative!");
-					i = segmentList.size() - 1;
+					i = segmentList.size() - 1; // Ends the loop
 				} 
-				segmentList.get(i).setSize(temp); // If the segment size 
-				// increases then the size is simply increased by the respective amount
+				segmentList.get(i).setSize(temp); // The segment size is updated
+				allSegments.add(segmentList.get(i)); // The segment is added to the list of segments that have been
+													 // resized
 			}
 			for (Segment segment : segmentList) {
-				if (segment.getSize() == 0) {
+				if (segment.getSize() == 0) {	// Removes the segment if the size is zero
 					segmentList.remove(segment);
+					allSegments.remove(segment);
 				}
 			}
 			segmentTable = new SegmentTable(segmentList); // The segment table is now the new list, segmentList,
-			//once all the resizes have been considered
+														  // once all the resizes have been considered
 		}
+	}
+	
+	
+	/**
+	 * A method that returns all the segments that have been resized
+	 * @return An array list of segments that have been resized in the method resize()
+	 */
+	public ArrayList<Segment> getAlteredSegments() {
+		return allSegments;
 	}
 	
 	/**
@@ -194,6 +209,15 @@ public class Process {
 	 */
 	public ArrayList<Segment> getAllSegments() {
 		return segmentTable.getAllSegments();
+	}
+	
+	
+	/**
+	 * A method that returns all the segments that are not in memory
+	 * @return Array list of segments that are not stored in memory
+	 */
+	public ArrayList<Segment> getSegmentsNotInMemory() {
+		return segmentTable.getSegmentsNotInMemory();
 	}
 	
 	

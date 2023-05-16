@@ -13,9 +13,9 @@ public class Segment {
 		private int size; // the size of the segment	
 		private boolean inMemory = false; // the location of the segment
 		private int base; // the base when the segment is in memory
-		private char read = '-'; // the permission to read
-		private char write = '-'; // the permission to write
-		private char execute = '-'; // the permission to execute
+		private char read = '-'; // the permission to read, default set to no permission
+		private char write = '-'; // the permission to write, default set to no permission
+		private char execute = '-'; // the permission to execute, default set to no permission
 		
 		/**
 		 * default constructor of a Segment
@@ -100,7 +100,10 @@ public class Segment {
 		}
 		
 		
-
+		/**
+		 * A method to return the details of a segment
+		 * @return A string containing the details of a segment
+		 */
 		public String toString() {
 			String output = " " + this.id;
 			if (this.id < 10) {
