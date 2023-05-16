@@ -11,17 +11,21 @@ package com1032.cw;
 public class Segment {
 		private int id; // the id of the segment 
 		private int size; // the size of the segment	
-		private boolean inMemory = false; // the location of the segment
+		private boolean inMemory; // the location of the segment
 		private int base; // the base when the segment is in memory
-		private char read = '-'; // the permission to read, default set to no permission
-		private char write = '-'; // the permission to write, default set to no permission
-		private char execute = '-'; // the permission to execute, default set to no permission
+		private char read; // the permission to read, default set to no permission
+		private char write; // the permission to write, default set to no permission
+		private char execute; // the permission to execute, default set to no permission
 		
 		/**
 		 * default constructor of a Segment
 		 */
 		public Segment() {
 			super();
+			inMemory = false;
+			read = '-';
+			write = '-';
+			execute = '-';
 		}
 		
 		/**
@@ -39,6 +43,10 @@ public class Segment {
 			}
 			id = segmentID;
 			this.size = size;
+			inMemory = false;
+			read = '-';
+			write = '-';
+			execute = '-';
 		}
 		
 		public int getID() {

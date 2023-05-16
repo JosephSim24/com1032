@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class SegmentTable {
 	
 	private ArrayList<Segment> segments; // list of the segments in the table
-	private int valid = 0; // validity of each segment depending on whether the segment is 
+	private int valid; // validity of each segment depending on whether the segment is 
 	// in the main memory or not
 	
 	/**
@@ -21,6 +21,7 @@ public class SegmentTable {
 	 */
 	public SegmentTable(ArrayList<Segment> seg) {
 		this.segments = seg;
+		valid = 0;
 	}
 	
 	

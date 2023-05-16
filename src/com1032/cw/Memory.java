@@ -28,7 +28,7 @@ public class Memory {
 										  // segments which are fragments i.e. to be compacted later on as part of the hole
 	private Map<String, Integer> tlb; // A hash map which represents a translation
 									  // look-aside buffer for this memory
-	private static final int max = 3; // An integer to represent the number of values
+	private static final int MAX = 3; // An integer to represent the number of values
 									  // allowed in the tlb hash map
 	
 	/**
@@ -56,7 +56,7 @@ public class Memory {
 															 // is deleted if a 4th entry is added
 			@Override
 			protected boolean removeEldestEntry(Map.Entry<String, Integer> eldest) {
-				return this.size() > max;
+				return this.size() > MAX;
 			}
 		};
 	}
