@@ -186,13 +186,6 @@ public class Process {
 		System.out.println("P" + pid + " " + segmentTable.toString());
 	}
 	
-	/**
-	 * A method that returns the number of segments that are in the memory
-	 * @return The number of segments that are in the main memory
-	 */
-	public int getSegmentNum() {
-		return segmentTable.getSegmentNum();
-	}
 	
 	/**
 	 * Returns the segments that are in the memory

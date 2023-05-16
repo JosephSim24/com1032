@@ -152,20 +152,6 @@ public class SegmentTable {
 	}
 	
 	
-	/**
-	 * A method that returns the number of segments that are in the main memory
-	 * @return The number of segments, from a segment table, that are in the main memory
-	 */
-	public int getSegmentNum() {
-		int num = 0;
-		for (Segment seg : segments) {
-			if (seg.getInMemory() != false) {
-				num += seg.getSize();
-			}
-		}
-		return num;
-	}
-	
 	
 	/**
 	 * A method to display the details of all of the segments in the table
